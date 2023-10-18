@@ -1,0 +1,519 @@
+<!DOCTYPE html> <!-- Document type declaration for HTML5 -->
+<html>
+    <head>
+        <meta charset="UTF-8"> <!-- Set character encoding to UTF-8 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configure viewport settings for responsive design -->
+        <title>Weather Application</title> <!-- Title of the page --> <!-- Linking HTML code to CSS code "style.css" -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Preconnect to Google Fonts to use fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconnect to Google Fonts with crossorigin attribute -->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!-- Link to Google Fonts to load the "Open Sans" font -->
+        <style>
+
+body {
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
+    margin: 0; /* Remove default margin */
+    background-color: rgba(200, 230, 255, 0.45);
+    font-family: 'Open Sans', sans-serif; /* Font family */
+    background-image: url(https://source.unsplash.com/random/1320x450?london);
+    background-position: top;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+/* Styling for the weather card container */
+.card {
+    background: white;
+    position: relative;
+    left: 100px;
+    top: 500px;
+    color: black; /* Text color */
+    padding: 2em; /* Padding inside the card */
+    border-radius: 10px; /* Rounded corners */
+    width: 850px;
+    height: 230px;
+    margin: 1em; /* Margin around the card */    
+    padding: 0%;
+}
+
+.data {
+    background: white;
+    position: relative;
+    left: 100px;
+    top: 500px;
+    color: black; /* Text color */
+    padding: 2em; /* Padding inside the card */
+    border-radius: 10px; /* Rounded corners */
+    width: 850px;
+    height: 415px;
+    margin: 1em; /* Margin around the card */    
+    padding: 0%;;
+    margin-bottom: 900px;
+}
+
+
+.search {
+    position: relative;
+    bottom: 1400px;
+    left: 215px;
+}
+
+/* Styling for the search button */
+button {
+    margin: 0.5em; /* Margin around the button */
+    border-radius: 50%; /* Circular button */
+    border: none; /* Remove button border */
+    height: 46px;
+    width: 44px;
+    outline: none; /* Remove button focus outline */
+    background: white; /* Button background color */
+    cursor: pointer; /* Cursor style */
+    transition: 0.2s ease-in-out; /* Smooth hover transition */
+}
+
+/* Styling for the search input field */
+input.search-bar {
+    border: none; /* Remove input border */
+    outline: none; /* Remove input focus outline */
+    padding: 0.4em 1em; /* Padding inside the input field */
+    border-radius: 24px; /* Rounded input field */
+    background: white; /* Input background color */
+    color: rgb(0, 0, 0); /* Text color */
+    font-family: inherit; /* Inherit font family from the body */
+    font-size: 105%; /* Font size */
+    width: calc(100%- 100px); /* Calculate input width (minus the button width) */
+    width: 500px;
+    height: 30px;
+}
+
+/* Styling for the button on hover */
+button:hover {
+    background: #7c7c7c; /* Darker background color on hover */
+}
+
+/* Styling for the temperature heading */
+h1.temp {
+    margin: 0; /* Remove default margin */
+    margin-bottom: 0.5em;
+}
+
+.description {
+    text-transform: capitalize;
+    margin-left: 8px;
+    font-size: 22px;
+    position: relative;
+    bottom: 190px;
+    left: 25px;
+}
+.fulldata{
+    position: relative;
+    left: 15px;
+    top: 25px;
+}
+.temp{
+    font-size: 40px;
+    position: relative;
+    left: 25px;
+    top: 20px;
+}
+.para{
+    font-size: 20px;
+    position: relative;
+    top: 10px ;
+    left: 25px;
+    color: blue;
+}
+.para3{
+    font-size: 20px;
+    position: relative;
+    top: 10px ;
+    left: 25px;
+    color: blue;
+}
+.icon{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    bottom: 125px;
+    left: 600px;
+    
+}
+.para2{
+    font-size: 20px;
+    position: relative;
+    top: 10px ;
+    left: 15px;
+    color: blue;
+}
+.humidity{
+    font-size: 25px;
+    position: relative;
+    left: 50px;
+    bottom: 5px;
+}
+.humidity .idity{
+    position: relative;
+    bottom : 32px;
+    left: 180px;
+}
+.humidity .water-outline{
+    position: relative;
+    top: 40px;
+    width: 30px;
+    height: 30px;
+    right: 40px;
+
+}
+.feels{
+    position: relative;
+    top: 30px;
+    left: 20px;
+    font-size: 25px;
+}
+.feels .like{
+    font-size: 40px;
+    position: relative;
+    left: 5px;
+
+}
+.pressure{
+    font-size: 25px;
+    position: relative;
+    bottom: 30px;
+    left: 50px;
+}
+.pressure .ssure{
+    position: relative;
+    bottom : 32px;
+    left: 180px;
+}
+.pressure .speedometer-outline{
+    position: relative;
+    top: 40px;
+    width: 30px;
+    height: 30px;
+    right: 40px;
+
+}
+.windimg{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 40px;
+    right: 40px;
+}
+.windspeed{
+    font-size: 25px;
+    position: relative;
+    left: 50px;
+    bottom: 50px;
+}
+.speed {
+    position: relative;
+    bottom: 35px;
+    left: 180px;
+}
+.gust{
+    font-size: 25px;
+    position: relative;
+    left: 460px;
+    bottom: 320px;
+
+}
+.gustimg{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 40px;
+    right: 45px;
+}
+.clouds{
+    font-size: 25px;
+    position: relative;
+    left: 460px;
+    bottom: 345px;
+}
+.cloudimg{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 40px;
+    right: 45px;
+}
+.minmax{
+    font-size: 25px;
+    position: relative;
+    left: 460px;
+    bottom: 365px;
+}
+.minmaximg{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 40px;
+    right: 45px;
+}
+.air {
+    background: white;
+    position: relative;
+    right: 20px;
+    bottom: 320px;
+    color: black; /* Text color */
+    padding: 2em; /* Padding inside the card */
+    border-radius: 10px; /* Rounded corners */
+    width: 850px;
+    height: 300px;
+    margin: 1em; /* Margin around the card */    
+    padding: 0%;
+}
+.co{
+    font-size: 22px;
+    position: relative;
+    top: 50px;
+    left: 50px;
+}
+.no{
+    font-size: 22px;
+    position: relative;
+    top: 70px;
+    left: 50px;
+
+}
+.no2{
+    font-size: 22px;  
+    position: relative;
+    top: 90px;
+    left: 50px;
+}
+.o3{
+    font-size: 22px;
+    position: relative;
+    top: 110px;
+    left: 50px;
+}
+.so2{
+    font-size: 22px;
+    position: relative;
+    bottom: 70px;
+    left: 600px;
+}
+.pm25{
+    font-size: 22px;
+    position: relative;
+    bottom: 50px;
+    left: 600px;
+}
+.pm10{
+    font-size: 22px;
+    position: relative;
+    bottom: 30px;
+    left: 600px;
+}
+.nh3{
+    font-size: 22px;
+    position: relative;
+    bottom: 10px;
+    left: 600px;
+}
+        </style>
+    </head>
+
+    <body>
+        
+        <div class="card"> <!-- Start of a card container for weather information -->
+            <div class="weather-loading">
+                <p class="para"><b>Temperature: </b></p>
+                <h1 class="temp">29°c</h1> <!-- Heading displaying the temperature -->
+                <div class="flex">
+                    <img src="https://openweathermap.org/img/wn/50n.png" alt="" class="icon" /> <!-- Image (currently empty) for weather icons -->
+                    <div class="description"><h4>Haze</h4></div> <!-- Description of the weather condition -->
+                </div> 
+            </div>
+        </div>
+        <div class="data">
+            <div class="para2"><b>Weather Today</b></div>
+            <div class="feels">
+                <div class="feel">Feels Like</div>
+                <div class="like">30°C</div>
+            </div>
+            <div class="fulldata">
+            <div class="humidity">
+                    <ion-icon class="water-outline" name="water-outline"></ion-icon>
+                    <div class="hum">Humidity :</div>
+                    <div class="idity">30%</div>
+            </div>
+            <div class="pressure">
+                <ion-icon class="speedometer-outline" name="speedometer-outline"></ion-icon>
+                <div class="pre">Pressure :</div>
+                <div class="ssure">30 atm</div>
+            </div>
+            <div class="windspeed">
+                <img src="https://cdn-icons-png.flaticon.com/128/2011/2011448.png" alt="Wind Icon" class="windimg">
+                <div class="wind">Wind-speed :</div>
+                <div class="speed">30 km/h</div>
+            </div>
+            <div class="gust">
+                <img src="https://cdn-icons-png.flaticon.com/128/10206/10206952.png" alt="Gust icon" class="gustimg">
+                <div class="wind">Gust-speed :</div>
+                <div class="speed">30 km/h</div>
+            </div>
+            <div class="clouds">
+                <img src="https://cdn-icons-png.flaticon.com/128/3222/3222791.png" alt="clouds icon" class="cloudimg">
+                <div class="wind">Clouds :</div>
+                <div class="speed">30%</div>
+            </div>
+            <div class="minmax">
+                <img src="https://cdn-icons-png.flaticon.com/128/1843/1843544.png" alt="minmax icon" class="minmaximg">
+                <div class="wind">Min/Max :</div>
+                <div class="speed">30/40°C</div>
+            </div>
+        </div>
+        <div class="air">
+            <div class="co">CO: </div>
+            <div class="no">NO: </div>
+            <div class="no2">NO2: </div>
+            <div class="o3">O3: </div>
+            <div class="so2">SO2: </div>
+            <div class="pm25">PM2.5: </div>
+            <div class="pm10">PM10: </div>
+            <div class="nh3">NH3: </div>
+        </div>  
+        <div class="language"></div>
+
+        <div class="search"> <!-- Start of a section for search functionality -->
+            <input type="text" class="search-bar" placeholder="Search"> <!-- Input field for user input with a placeholder -->
+            <button> <!-- Button element for triggering the search -->
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"> <!-- SVG icon within the button -->
+                    <path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path>
+                </svg>
+            </button>
+        </div>
+    </body>
+    <script src="Weather.js" defer></script> <!-- Link to an external JavaScript file named "script.js" for interactivity -->
+    <script language="JavaScript" type="text/JavaScript" src="path/to/p5.dom.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>let weather = {
+        apikey: "11af4d539c4a1c02758024a29171351f", // Replace with your OpenWeatherMap API key
+      
+        fetchWeather: function (city) {
+          fetch(
+            "https://api.openweathermap.org/data/2.5/weather?q=" +
+              city +
+              "&units=metric&appid=" +
+              this.apikey
+          )
+            .then((response) => response.json())
+            .then((data) => this.displayWeather(data))
+            .catch((error) => {
+              console.error("Error fetching weather data:", error);
+            });
+        },
+      
+          fetchAirQuality: function (city) {
+          fetch(
+            `https://api.openweathermap.org/data/2.5/air_pollution?q=${city}&appid=${this.apikey}`
+          )
+            .then((response) => response.json())
+            .then((data) => this.displayAirQuality(data))
+            .catch((error) => {
+              console.error("Error fetching air quality data:", error);
+            });
+        },
+      
+      
+        displayWeather: function (data) {
+          const { main, wind, weather } = data;
+          const { temp, humidity, pressure, feels_like } = main;
+          const { speed, gust } = wind;
+          const { description } = weather[0];
+      
+          // Update HTML elements with weather information
+          document.querySelector(".temp").innerText = temp + "°C";
+          document.querySelector(".description").innerText = description;
+          document.querySelector(".humidity .idity").innerText = humidity + "%";
+          document.querySelector(".pressure .ssure").innerText = pressure + " hPa";
+          document.querySelector(".windspeed .speed").innerText = speed + " km/h";
+          document.querySelector(".gust .speed").innerText = gust + " km/h";
+          document.querySelector(".clouds .speed").innerText = data.clouds.all + "%";
+          document.querySelector(".feels .like").innerText = feels_like + "°C";
+          document.querySelector(".minmax .speed").innerText = data.main.temp_min + "/" + data.main.temp_max + "°C";
+        },
+      
+        search: function () {
+          this.fetchWeather(document.querySelector(".search-bar").value);
+        },
+      };
+      
+      document.querySelector(".search button").addEventListener("click", function () {
+        weather.search();
+      });
+      
+      document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+        if (event.key == "Enter") {
+          weather.search();
+        }
+      });
+      
+      // Fetch weather data for the default city (Denver) when the page loads
+      window.addEventListener("load", function () {
+        weather.fetchWeather("Denver");
+      });
+      
+      
+      
+      
+      
+      let airQuality = {
+        apikey: "11af4d539c4a1c02758024a29171351f", // Replace with your OpenWeatherMap API key
+      
+        fetchAirQuality: function (city) {
+          fetch(
+            `https://api.openweathermap.org/data/2.5/air_pollution?q=${city}&appid=${this.apikey}`
+          )
+            .then((response) => response.json())
+            .then((data) => this.displayAirQuality(data))
+            .catch((error) => {
+              console.error("Error fetching air quality data:", error);
+            });
+        },
+      
+        displayAirQuality: function (data) {
+          const airPollution = data.list[0].components;
+      
+          // Update HTML elements with air pollution parameters
+          document.querySelector(".co").innerText = `CO: ${airPollution.co} µg/m³`;
+          document.querySelector(".no").innerText = `NO: ${airPollution.no} µg/m³`;
+          document.querySelector(".no2").innerText = `NO2: ${airPollution.no2} µg/m³`;
+          document.querySelector(".o3").innerText = `O3: ${airPollution.o3} µg/m³`;
+          document.querySelector(".so2").innerText = `SO2: ${airPollution.so2} µg/m³`;
+          document.querySelector(".pm25").innerText = `PM2.5: ${airPollution.pm2_5} µg/m³`;
+          document.querySelector(".pm10").innerText = `PM10: ${airPollution.pm10} µg/m³`;
+          document.querySelector(".nh3").innerText = `NH3: ${airPollution.nh3} µg/m³`;
+        },
+      
+        search: function () {
+          const city = document.querySelector(".search-bar").value;
+          this.fetchAirQuality(city);
+        },
+      };
+      
+      // Add event listeners for the search button and Enter key
+      document.querySelector(".search button").addEventListener("click", function () {
+        airQuality.search();
+      });
+      
+      document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+        if (event.key == "Enter") {
+          airQuality.search();
+        }
+      });
+      
+      // Fetch air quality data for the default city (Denver) when the page loads
+      window.addEventListener("load", function () {
+        airQuality.fetchAirQuality("Denver");
+      });
+      
+      </script>
+      <script src="autocomplete.js" defer></script>
+</html>

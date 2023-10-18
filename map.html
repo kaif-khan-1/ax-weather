@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Map</title>
+
+    <!-- Include OpenLayers library -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
+
+    <style>
+        /* Define the map container to occupy the full viewport */
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Make the map container fullscreen */
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Style the search bar */
+        #searchBar {
+            text-align: center;
+            margin: 10px;
+        }
+
+        #locationInput {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #searchButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #searchButton:hover {
+            background-color: #0056b3;
+        }
+        /* Style for the marker */
+        .marker {
+        width: 20px;
+        height: 20px;
+        background-color: #007BFF;
+        border-radius: 50%;
+        }
+
+        /* Style for the overlay container */
+        .overlay {
+        position: absolute;
+        z-index: 10;
+        pointer-events: none;
+        }
+
+        /* Style for the popup text (you can customize this) */
+        .popup {
+        background-color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Create a search bar -->
+    <div id="searchBar">
+        <input type="text" id="locationInput" placeholder="Enter a location">
+        <button id="searchButton">Search</button>
+    </div>
+    <ul id="suggestions"></ul>
+
+    <div id="overlay" class="overlay">
+        <div class="marker"></div>
+        <div class="popup">
+            Searched Location
+        </div>
+    </div>
+    <!-- Create a map container -->
+    <div id="map" class="map"></div>
+
+    <script>
+        // Your OpenWeatherMap API key
+        var apiKey = '11af4d539c4a1c02758024a29171351f';
+
+        // Initialize the map with a default location and zoom level
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([0, 0]),
+                zoom: 2
+            })
+        });
+
+        // Add the OpenWeatherMap "temp_new" layer
+        var tempLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`,
+                attributions: '© <a href="https://openweathermap.org">OpenWeatherMap</a> contributors'
+            })
+        });
+        var overlay = new ol.Overlay({
+        element: document.getElementById('overlay'),
+        positioning: 'bottom-center',
+        offset: [0, -10], // Offset to adjust the marker's position
+});
+
+        map.addLayer(tempLayer);
+
+        // Add map controls
+        map.addControl(new ol.control.ZoomSlider());
+        map.addControl(new ol.control.ScaleLine());
+        map.addControl(new ol.control.FullScreen());
+
+        // Function to perform location search and update the map
+        function performLocationSearch() {
+            resetMapView();
+            var locationInput = document.getElementById('locationInput').value;
+
+            // Encode the user input to ensure it's safe for a URL
+            var encodedLocationInput = encodeURIComponent(locationInput);
+
+            // Use Nominatim to geocode the location
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodedLocationInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        // Extract the first result (assuming it's the most relevant)
+                        var result = data[0];
+
+                        // Extract coordinates correctly
+                        var latitude = parseFloat(result.lat);
+                        var longitude = parseFloat(result.lon);
+
+                        // Debugging: Print the result and coordinates to the console
+                        console.log('Search Result:', result);
+                        console.log('Latitude:', latitude);
+                        console.log('Longitude:', longitude);
+
+
+                        setOverlayPosition(latitude, longitude);
+
+                        // Smoothly animate to the searched location on the map
+                        map.getView().animate({
+                            center: ol.proj.fromLonLat([longitude, latitude]),
+                            zoom: 12,
+                            duration: 1000 // Animation duration in milliseconds
+                        });
+                    } else {
+                        // Handle the case when no results are found
+                        alert('Location not found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error searching for location:', error);
+                });
+        }
+
+        // Event handler for the search button
+        document.getElementById('searchButton').addEventListener('click', performLocationSearch);
+
+        // Event handler for pressing Enter in the input field
+        document.getElementById('locationInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                performLocationSearch();
+            }
+        });
+    function resetMapView() {
+    map.getView().animate({
+        center: ol.proj.fromLonLat([0, 0]),
+        zoom: 2,
+        duration: 1000 // Animation duration in milliseconds
+    });
+}
+
+map.addOverlay(overlay);
+function setOverlayPosition(latitude, longitude) {
+    overlay.setPosition(ol.proj.fromLonLat([longitude, latitude]));
+}
+
+// Autocomplete code
+const autocompleteInputField = document.getElementById('locationInput');
+const suggestionsList = document.getElementById('suggestions');
+
+autocompleteInputField.addEventListener('input', function () {
+    const query = autocompleteInputField.value;
+
+    // Construct the Nominatim API URL
+    const apiUrl = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=5`;
+
+    // Make the API request
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Log the API response in the console
+            console.log('API Response:', data);
+
+            // Clear previous suggestions
+            suggestionsList.innerHTML = '';
+
+            // Display matching locations
+            data.forEach(item => {
+                const locationName = item.display_name;
+                const listItem = document.createElement('li');
+
+                // Extract and display the city name from the address
+                let city = '';
+                if (item.address) {
+                    if (item.address.city) {
+                        city = item.address.city;
+                    } else if (item.address.town) {
+                        city = item.address.town;
+                    } else if (item.address.village) {
+                        city = item.address.village;
+                    } else if (item.address.hamlet) {
+                        city = item.address.hamlet;
+                    } else if (item.address.suburb) {
+                        city = item.address.suburb;
+                    }
+                }
+
+                // Use the full location name if the city is empty
+                listItem.textContent = city || locationName;
+
+                // Add click event listener to make suggestions selectable
+                listItem.addEventListener('click', function () {
+                    autocompleteInputField.value = city || locationName;
+                    suggestionsList.innerHTML = ''; // Clear suggestions
+                });
+
+                suggestionsList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data from Nominatim:', error);
+        });
+});
+
+
+    </script>
+</body>
+</html>
