@@ -1,65 +1,69 @@
-<!DOCTYPE html> <!-- Document type declaration for HTML5 -->
-<html>
-    <head>
-        <meta charset="UTF-8"> <!-- Set character encoding to UTF-8 -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configure viewport settings for responsive design -->
-        <title>Weather Application</title> <!-- Title of the page --> <!-- Linking HTML code to CSS code "style.css" -->
-        <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Preconnect to Google Fonts to use fonts -->
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconnect to Google Fonts with crossorigin attribute -->
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!-- Link to Google Fonts to load the "Open Sans" font -->
-        <style>
+Weather.html
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>AXWEATHER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include OpenLayers library -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
+
+    <style>
+      /* Import Google font - Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
 body {
-    scroll-behavior: smooth;
-    height: 100%;
-    width: 100%;
-    margin: 0; /* Remove default margin */
-    background-color: rgba(200, 230, 255, 0.45);
-    font-family: 'Open Sans', sans-serif; /* Font family */
-    background-image: url(https://source.unsplash.com/random/1320x450?london);
-    background-position: top;
-    background-repeat: no-repeat;
-    overflow-x: hidden;
+  scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(44, 22, 89);
+  font-family: 'Open Sans', sans-serif; /* Font family */
+  background-image: url(https://source.unsplash.com/random/1320x450?london);
+  background-position: top;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  
 }
-/* Styling for the weather card container */
-.card {
-    background: white;
+.weather-data{
+  padding-bottom: 100px;
+}
+.days-forecast h2 {
+  margin: 20px 0;
+  font-size: 1.5rem;
+}
+.days-forecast .weather-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    width: 200x;
     position: relative;
-    left: 100px;
-    top: 500px;
-    color: black; /* Text color */
-    padding: 2em; /* Padding inside the card */
-    border-radius: 10px; /* Rounded corners */
-    width: 850px;
-    height: 230px;
-    margin: 1em; /* Margin around the card */    
-    padding: 0%;
+    right: -1px;
 }
-
-.data {
-    background: white;
+.weather-cards .card {
+    color: #000000;
+    padding: 18px 16px;
+    list-style: none;
+    background: #ffffff;
+    border-radius: 10px;
     position: relative;
-    left: 100px;
-    top: 500px;
-    color: black; /* Text color */
-    padding: 2em; /* Padding inside the card */
-    border-radius: 10px; /* Rounded corners */
-    width: 850px;
-    height: 415px;
-    margin: 1em; /* Margin around the card */    
-    padding: 0%;;
-    margin-bottom: 900px;
+    top: 1320px; 
 }
 
 
-.search {
-    position: relative;
-    bottom: 1400px;
-    left: 215px;
-}
+.weather-input{
+  z-index: 1;
+  position: absolute;
+  left: 500px;
 
-/* Styling for the search button */
-button {
+}
+.search-btn{
     margin: 0.5em; /* Margin around the button */
     border-radius: 50%; /* Circular button */
     border: none; /* Remove button border */
@@ -69,451 +73,1137 @@ button {
     background: white; /* Button background color */
     cursor: pointer; /* Cursor style */
     transition: 0.2s ease-in-out; /* Smooth hover transition */
+    position: absolute;
+    top: 140px;
+    left: 345px;
+  
 }
-
-/* Styling for the search input field */
-input.search-bar {
+/* Styling for the button on hover */
+.search-btn:hover {
+    background: #7c7c7c; /* Darker background color on hover */
+}
+.city-input{
     border: none; /* Remove input border */
     outline: none; /* Remove input focus outline */
     padding: 0.4em 1em; /* Padding inside the input field */
     border-radius: 24px; /* Rounded input field */
-    background: white; /* Input background color */
-    color: rgb(0, 0, 0); /* Text color */
+    background-color: rgb(54, 54, 190);
+    color: rgb(255, 255, 255); /* Text color */
     font-family: inherit; /* Inherit font family from the body */
     font-size: 105%; /* Font size */
-    width: calc(100%- 100px); /* Calculate input width (minus the button width) */
-    width: 500px;
-    height: 30px;
+    width: 450px;
+    height: 40px;
+    position: absolute;
+    top: 150px;
+    right: -350px;
 }
-
-/* Styling for the button on hover */
-button:hover {
-    background: #7c7c7c; /* Darker background color on hover */
+.location-btn{
+  border-radius: 100%;
+  border: none;
+  height: 46px;
+  width: 44px;
+  position: absolute;
+  top: 147px;
+  left: 400px;
+  background-color: white;
+  cursor: pointer; /* Cursor style */
+  transition: 0.2s ease-in-out; /* Smooth hover transition */
 }
-
-/* Styling for the temperature heading */
-h1.temp {
-    margin: 0; /* Remove default margin */
+.location-btn:hover{
+  background: #7c7c7c;
+}
+.currentimg{
+  width: 29px;
+  height: 29px;
+  position: relative;
+  bottom: 1px;
+}
+/* Styling for the weather card container */
+.card {
+    background: white;
+    position: absolute;
+    left: 44px;
+    top: 587px;
+    color: black;
+    padding: 2em;
+    border-radius: 10px;
+    width: 660px;
+    height: 250px;
+    margin: 1em;
+    padding: 0%;
+}
+/*title of card*/
+.para{
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    color: blue;
+}
+/*temp*/
+.temp {
+    margin: 0;
+    font-weight: 500;
+    font-size: 80px;
     margin-bottom: 0.5em;
+    position: absolute;
+    top: 45px;
+    left: 50px;
 }
-
+/*description like haze */
 .description {
     text-transform: capitalize;
     margin-left: 8px;
-    font-size: 22px;
-    position: relative;
-    bottom: 190px;
-    left: 25px;
-}
-.fulldata{
-    position: relative;
-    left: 15px;
-    top: 25px;
-}
-.temp{
-    font-size: 40px;
-    position: relative;
-    left: 25px;
-    top: 20px;
-}
-.para{
-    font-size: 20px;
-    position: relative;
-    top: 10px ;
-    left: 25px;
-    color: blue;
-}
-.para3{
-    font-size: 20px;
-    position: relative;
-    top: 10px ;
-    left: 25px;
-    color: blue;
+    font-size: 31px;
+    position: absolute;
+    top: 150px;
+    left: 50px;
 }
 .icon{
-    position: relative;
-    width: 200px;
-    height: 200px;
-    bottom: 125px;
-    left: 600px;
-    
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    bottom: 33px;
+    left: 440px;
 }
+
+
+/*Card for current weather */
+.data {
+    background: white;
+    position: absolute;
+    left: 44px;
+    top: 867px;
+    color: black; 
+    padding: 2em; 
+    border-radius: 10px; 
+    width: 945px;
+    height: 415px;
+    margin: 1em;   
+    padding: 0%;;
+    margin-bottom: 900px;
+}
+/*holder for current data*/
 .para2{
     font-size: 20px;
     position: relative;
     top: 10px ;
-    left: 15px;
+    left: 25px;
     color: blue;
 }
-.humidity{
-    font-size: 25px;
-    position: relative;
-    left: 50px;
-    bottom: 5px;
-}
-.humidity .idity{
-    position: relative;
-    bottom : 32px;
-    left: 180px;
-}
-.humidity .water-outline{
-    position: relative;
-    top: 40px;
-    width: 30px;
-    height: 30px;
-    right: 40px;
-
-}
+/*Feels temperature*/
 .feels{
+    position: absolute;
+    top: 61px;
+    left: 57px;
+}
+.feel{
+    font-size: 21px;
     position: relative;
-    top: 30px;
-    left: 20px;
-    font-size: 25px;
+    left: 18px;
 }
 .feels .like{
-    font-size: 40px;
-    position: relative;
-    left: 5px;
+    font-size: 56px;
+    position: absolute;
+    left: 7px;
+    bottom: -68px;
+}
 
+/*To dictate everything from humidity to gust*/
+.otherdata{
+  position: relative;
+  top: -12px;
 }
-.pressure{
-    font-size: 25px;
-    position: relative;
-    bottom: 30px;
-    left: 50px;
-}
-.pressure .ssure{
-    position: relative;
-    bottom : 32px;
-    left: 180px;
-}
-.pressure .speedometer-outline{
-    position: relative;
-    top: 40px;
-    width: 30px;
-    height: 30px;
-    right: 40px;
 
+
+/*humidity*/
+.humidity {
+    position: absolute;
+    top: 180px;
+    left: 90px;
+    font-size: 24px;
+}
+.idity {
+    position: absolute;
+    left: 215px;
+    bottom: 0px;
+}
+
+img.humidityimg {
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    bottom: 1px;
+    right: 143px;
+}
+
+/*Windspeed*/
+.windspeed{
+    position: absolute;
+    top: 250px;
+    left: 90px;
+    font-size: 24px;
+}
+.speed{
+    position: relative;
+    bottom: 31px;
+    left: 214px;
 }
 .windimg{
-    width: 30px;
-    height: 30px;
-    position: relative;
-    top: 40px;
-    right: 40px;
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    bottom: 32px;
+    right: 170px;
 }
-.windspeed{
-    font-size: 25px;
-    position: relative;
-    left: 50px;
-    bottom: 50px;
-}
-.speed {
-    position: relative;
-    bottom: 35px;
-    left: 180px;
-}
-.gust{
-    font-size: 25px;
-    position: relative;
-    left: 460px;
-    bottom: 320px;
 
-}
-.gustimg{
-    width: 30px;
-    height: 30px;
-    position: relative;
-    top: 40px;
-    right: 45px;
-}
+/*clouds*/
 .clouds{
-    font-size: 25px;
-    position: relative;
-    left: 460px;
-    bottom: 345px;
+    position: absolute;
+    top: 321px;
+    left: 90px;
+    font-size: 24px;
 }
 .cloudimg{
-    width: 30px;
-    height: 30px;
-    position: relative;
-    top: 40px;
-    right: 45px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    bottom: 31px;
+    right: 113px;
 }
-.minmax{
-    font-size: 25px;
+
+/*Pressure*/
+.pressure{
+    position: absolute;
+    top: 180px;
+    left: 535px;
+    font-size: 24px;
+}
+.pressureimg{
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    bottom: 31px;
+    right: 135px;
+}
+.ssure{
     position: relative;
-    left: 460px;
-    bottom: 365px;
+    bottom: 31px;
+    left: 214px;
+}
+
+/*MinMax*/
+.minmax{
+    position: relative;
+    top: 210px;
+    left: 533px;
+    font-size: 24px;
 }
 .minmaximg{
-    width: 30px;
-    height: 30px;
     position: relative;
-    top: 40px;
-    right: 45px;
+    width: 36px;
+    height: 36px;
+    bottom: -38px;
+    right: 57px;
 }
-.air {
+
+/*gust*/
+.gust{
+    position: relative;
+    top: 170px;
+    left: 533px;
+    font-size: 24px;
+}
+.gustimg{
+    position: relative;
+    width: 36px;
+    height: 36px;
+    bottom: -43px;
+    right: 57px;
+}
+
+header{
+    position: absolute;
+    top: 450px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 20px 100px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: rgb(15, 15, 55);
+    color: white;
+}
+.navigation a{
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 26px;
+    color: white;
+    padding: 55px;
+    padding-bottom: 0;
+    cursor: pointer; /* Cursor style */
+    transition: 0.3s ease-in-out; /* Smooth hover transition */
+}
+.navigation a:hover{
+    color: red;
+}
+.weathericon {
+    z-index: 1;
+    position: relative;
+    left: 22px;
+    top: -19px;
+    height: 130px;
+    width: 130px;
+}
+.card h3 {
+    position: relative;
+    bottom: 7px;
+    left: 49px;
+    color: blue;
+}
+.card h6 {
+    font-size: 24px;
+    position: absolute;
+    bottom: 73px;
+    left: 58px;
+}
+.card p{
+    font-size: 19px;
+    position: absolute;
+    left: 30px;
+    bottom: 39px;
+}
+ul.suggestions {
+    position: absolute;
+    color: black;
     background: white;
-    position: relative;
-    right: 20px;
-    bottom: 320px;
-    color: black; /* Text color */
-    padding: 2em; /* Padding inside the card */
-    border-radius: 10px; /* Rounded corners */
-    width: 850px;
-    height: 300px;
-    margin: 1em; /* Margin around the card */    
-    padding: 0%;
+    top: 200px;
+    right: 10px;
 }
-.co{
-    font-size: 22px;
-    position: relative;
-    top: 50px;
-    left: 50px;
+/* Make the map container fullscreen */
+#map {
+    width: 400px;
+    height: 250px;
+    position: absolute;
+    bottom: 985px;
+    z-index: 2;
+    left: 766px;
+    top: 605px;
 }
-.no{
-    font-size: 22px;
-    position: relative;
-    top: 70px;
-    left: 50px;
+canvas {
+    border-radius: 10px;
+}
+/* Style the search bar */
+#searchBar {
+    text-align: center;
+    margin: 10px;
+    position: absolute;
+    top: 10px; /* Adjust this value to control vertical positioning */
+    left: 500px; /* Adjust this value to control horizontal positioning */
+    z-index: 1000; /* Make sure it's above other elements */
+}
+.ol-attribution ul {
+    margin: 0;
+    padding: 1px .5em;
+    color: var(--ol-foreground-color);
+    text-shadow: 0 0 2px var(--ol-background-color);
+    font-size: 0px;
+}
 
-}
-.no2{
-    font-size: 22px;  
-    position: relative;
-    top: 90px;
-    left: 50px;
-}
-.o3{
-    font-size: 22px;
-    position: relative;
-    top: 110px;
-    left: 50px;
-}
-.so2{
-    font-size: 22px;
-    position: relative;
-    bottom: 70px;
-    left: 600px;
-}
-.pm25{
-    font-size: 22px;
-    position: relative;
-    bottom: 50px;
-    left: 600px;
-}
-.pm10{
-    font-size: 22px;
-    position: relative;
-    bottom: 30px;
-    left: 600px;
-}
-.nh3{
-    font-size: 22px;
-    position: relative;
-    bottom: 10px;
-    left: 600px;
-}
-        </style>
-    </head>
+        #locationInput {
+            border: none;
+    outline: none;
+    padding: 0.4em 1em;
+    border-radius: 24px;
+    background: white;
+    color: rgb(0, 0, 0);
+    font-family: inherit;
+    font-size: 105%;
+    width: calc(100% - 100px); /* Adjust as needed */
+    height: 30px;
+        }
 
-    <body>
+        #searchButton {
+            margin: 0.5em;
+            border-radius: 50%;
+            border: none;
+            height: 46px;
+            width: 44px;
+            outline: none;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+        #searchButton:hover {
+            background-color: #f0f0f0;
+        }
+        #searchButton {
+            margin-left: 5px; /* Add margin to separate from the input field */
+        }
+        /* Style for the marker */
+        .marker {
+        width: 20px;
+        height: 20px;
+        background-color: #007BFF;
+        border-radius: 50%;
+        }
+
+        /* Style for the overlay container */
+        .overlay {
+        position: absolute;
+        z-index: 10;
+        pointer-events: none;
+        }
+
+        /* Style for the popup text (you can customize this) */
+        .popup {
+        background-color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+        .map-container {
+        position: relative;
+        }
+ul#suggestions {
+    position: absolute;
+    top: 190px;
+    width: 446px;
+    background: white;
+    left: -98px;
+}
+.recommendation-card {
+    
+    position: absolute;
+    top: 1598px;
+    left: 61px;
+    height: 200px;
+    width: 710px;
+}
+/* Style for the recommendation card */
+.recommendation-card {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the text inside the recommendation card */
+.recommendation {
+    font-size: 18px;
+    color: #333;
+}
+.recommendation .p{
+    z-index: 100;
+    color: black;
+}
+.recommendations {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    position: relative;
+    top: 1242px;
+    width: 800px;
+    left: 51px;
+    border-radius: 10px;
+}
+
+.recommendation {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.recommendation h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.recommendation p {
+    font-size: 16px;
+    color: #555;
+}
+img.precipitationimg {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    left: 562px;
+    bottom: 131px;
+}
+.prec {
+    position: absolute;
+    left: 636px;
+    font-size: 21px;
+    bottom: 179px;
+}
+.precipitation-value {
+    position: absolute;
+    left: 637px;
+    font-size: 35px;
+    bottom: 125px;
+}
+.precipitation {
+    position: relative;
+    top: 49px;
+    left: 99px;
+}
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navigation">
+          <a href="#">Current</a>
+          <a href="index.html">Home</a>
+          <a href="maps/map.html">Maps</a>
+          <a href="About.html">About</a>
+          
+      </nav> 
+  </header> 
+  <a href="maps/map.html" class="more">Try more layers</a>
+      <div class="weather-input">
+        <input class="city-input" type="text" placeholder="Enter City" >
         
-        <div class="card"> <!-- Start of a card container for weather information -->
-            <div class="weather-loading">
-                <p class="para"><b>Temperature: </b></p>
-                <h1 class="temp">29°c</h1> <!-- Heading displaying the temperature -->
-                <div class="flex">
-                    <img src="https://openweathermap.org/img/wn/50n.png" alt="" class="icon" /> <!-- Image (currently empty) for weather icons -->
-                    <div class="description"><h4>Haze</h4></div> <!-- Description of the weather condition -->
-                </div> 
+  <ul id="suggestions"></ul>
+        <button class="search-btn">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"> <!-- SVG icon within the button -->
+          <path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path>
+          </svg>
+        </button>
+        <button class="location-btn"><img src="https://cdn-icons-png.flaticon.com/128/535/535137.png" alt="current location" class="currentimg"></button>
+      </div>
+      <div class="weather-data">
+        <div class="days-forecast">
+          <div class="weather-cards">
+            <!-- Day 2 -->
+            <div class="card">
+              <h3>Day 2</h3>
+              <p>29°c</p>
+              <h4>Moderate rain</h4>
+              <img class="Weathericon"src="https://openweathermap.org/img/wn/02d.png" alt="weather-icon">
             </div>
+            <!-- Day 3 -->
+            <div class="card">
+              <h3>Day 3</h3>
+              <p>29°c</p>
+              <h4>Moderate rain</h4>
+              <img class="Weathericon" src="https://openweathermap.org/img/wn/02d.png" alt="weather-icon">
+            </div>
+            <!-- Day 4 -->
+            <div class="card">
+              <h3>Day 4</h3>
+              <p>29°c</p>
+              <h4>Moderate rain</h4>
+              <img class="Weathericon" src="https://openweathermap.org/img/wn/02d.png" alt="weather-icon">
+            </div>
+            <!-- Day 5 -->
+            <div class="card">
+              <h3>Day 5</h3>
+              <p>29°c</p>
+              <h4>Moderate rain</h4>
+              <img class="Weathericon" src="https://openweathermap.org/img/wn/02d.png" alt="weather-icon">
+            </div>
+            <!-- Day 6 -->
+            <div class="card">
+              <h3>Day 6</h3>
+              <p>29°c</p>
+              <h4>Moderate rain</h4>
+              <img class="Weathericon" src="https://openweathermap.org/img/wn/02d.png" alt="weather-icon">
+            </div>
+          </div>
         </div>
-        <div class="data">
-            <div class="para2"><b>Weather Today</b></div>
-            <div class="feels">
-                <div class="feel">Feels Like</div>
-                <div class="like">30°C</div>
-            </div>
-            <div class="fulldata">
-            <div class="humidity">
-                    <ion-icon class="water-outline" name="water-outline"></ion-icon>
-                    <div class="hum">Humidity :</div>
-                    <div class="idity">30%</div>
-            </div>
-            <div class="pressure">
-                <ion-icon class="speedometer-outline" name="speedometer-outline"></ion-icon>
-                <div class="pre">Pressure :</div>
-                <div class="ssure">30 atm</div>
-            </div>
-            <div class="windspeed">
-                <img src="https://cdn-icons-png.flaticon.com/128/2011/2011448.png" alt="Wind Icon" class="windimg">
-                <div class="wind">Wind-speed :</div>
-                <div class="speed">30 km/h</div>
-            </div>
-            <div class="gust">
-                <img src="https://cdn-icons-png.flaticon.com/128/10206/10206952.png" alt="Gust icon" class="gustimg">
-                <div class="wind">Gust-speed :</div>
-                <div class="speed">30 km/h</div>
-            </div>
-            <div class="clouds">
-                <img src="https://cdn-icons-png.flaticon.com/128/3222/3222791.png" alt="clouds icon" class="cloudimg">
-                <div class="wind">Clouds :</div>
-                <div class="speed">30%</div>
-            </div>
-            <div class="minmax">
-                <img src="https://cdn-icons-png.flaticon.com/128/1843/1843544.png" alt="minmax icon" class="minmaximg">
-                <div class="wind">Min/Max :</div>
-                <div class="speed">30/40°C</div>
-            </div>
-        </div>
-        <div class="air">
-            <div class="co">CO: </div>
-            <div class="no">NO: </div>
-            <div class="no2">NO2: </div>
-            <div class="o3">O3: </div>
-            <div class="so2">SO2: </div>
-            <div class="pm25">PM2.5: </div>
-            <div class="pm10">PM10: </div>
-            <div class="nh3">NH3: </div>
-        </div>  
-        <div class="language"></div>
+      </div>
+     <!-- Create a map container -->
+     <div id="map" class="map"></div>
+     <div id="overlay" class="overlay">
+      <div class="marker"></div>
+      <div class="popup">
+          Searched Location
+      </div>
+  </div>
+    <div class="card"> <!-- Start of a card container for weather information -->
+      <div class="weather-loading">
+          <p2 class="para"> Current Temperature </p2>
+          <h4 class="temp">29°c</h4> <!-- Heading displaying the temperature -->
+          <div class="flex">
+              <img src="https://openweathermap.org/img/wn/50n.png" alt="" class="icon" /> <!-- Image (currently empty) for weather icons -->
+              <div class="description"><h4>Haze</h4></div> <!-- Description of the weather condition -->
+          </div> 
+      </div>
+  </div>
+  <div class="data">
+      <div class="para2"><b>Weather Today</b></div>
+      <div class="feels">
+          <div class="feel">Feels Like</div>
+          <div class="like">30°C</div>
+      </div>
+      <div class="otherdata">
+      <div class="humidity">
+          <img src="https://cdn-icons-png.flaticon.com/128/481/481453.png" alt="humidity icon" class="humidityimg">
+          <div>Humidity :</div>
+          <div class="idity">30%</div>
+      </div>
+      <div class="windspeed">
+        <img src="https://cdn-icons-png.flaticon.com/128/2011/2011448.png" alt="Wind Icon" class="windimg">
+        <div>Wind-speed :</div>
+        <div class="speed">30 km/h</div>
+    </div>
+    <div class="clouds">
+      <img src="https://cdn-icons-png.flaticon.com/128/2929/2929984.png" alt="clouds icon" class="cloudimg">
+      <div>Clouds :</div>
+      <div class="speed">30%</div>
+    </div>
+    <div class="pressure">
+      <img src="https://cdn-icons-png.flaticon.com/128/7334/7334246.png" alt="Pressure icon" class="pressureimg">
+      <div>Pressure :</div>
+      <div class="ssure">30 atm</div>
+    </div>
+    <div class="minmax">
+      <img src="https://cdn-icons-png.flaticon.com/128/1843/1843544.png" alt="minmax icon" class="minmaximg">
+      <div>Min/Max :</div>
+      <div class="speed">30/40°C</div>
+    </div>
+    <div class="gust">
+        <img src="https://cdn-icons-png.flaticon.com/128/10206/10206952.png" alt="Gust icon" class="gustimg">
+        <div>Gust-speed :</div>
+        <div class="speed">30 km/h</div>
+    </div> 
+    <div class="precipitation">
+        <img src="https://cdn-icons-png.flaticon.com/128/67/67780.png" alt="Precipitation icon" class="precipitationimg">
+        <div class="prec" >Precipitation </div>
+        <div class="precipitation-value">10%</div>
+    </div>
+    
 
-        <div class="search"> <!-- Start of a section for search functionality -->
-            <input type="text" class="search-bar" placeholder="Search"> <!-- Input field for user input with a placeholder -->
-            <button> <!-- Button element for triggering the search -->
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"> <!-- SVG icon within the button -->
-                    <path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path>
-                </svg>
-            </button>
-        </div>
-    </body>
-    <script src="Weather.js" defer></script> <!-- Link to an external JavaScript file named "script.js" for interactivity -->
-    <script language="JavaScript" type="text/JavaScript" src="path/to/p5.dom.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>let weather = {
-        apikey: "11af4d539c4a1c02758024a29171351f", // Replace with your OpenWeatherMap API key
-      
-        fetchWeather: function (city) {
-          fetch(
+    </div> 
+  </div>
+  <div class="recommendations">
+    <div class="recommendation">
+        <h3>Temperature Recommendation</h3>
+        <p class="temperature-recommendation"></p>
+    </div>
+    <div class="recommendation">
+        <h3>Humidity Recommendation</h3>
+        <p class="humidity-recommendation"></p>
+    </div>
+    <div class="recommendation">
+        <h3>Wind Speed Recommendation</h3>
+        <p class="wind-speed-recommendation"></p>
+    </div>
+    <div class="recommendation">
+        <h3>Precipitation Recommendation</h3>
+        <p class="precipitation-recommendation"></p>
+    </div>
+    <div class="recommendation">
+        <h3>Pressure Recommendation</h3>
+        <p class="pressure-recommendation"></p>
+    </div>
+    <div class="recommendation">
+        <h3>Clouds Recommendation</h3>
+        <p class="clouds-recommendation"></p>
+    </div>
+    <div class="recommendation">
+        <h3>Gust recommendation</h3>
+        <p class="gust-recommendation"></p>
+    </div>
+</div>
+
+
+    <script>
+
+//autocomplete
+const autocompleteInputFields = document.querySelectorAll('.city-input');
+
+autocompleteInputFields.forEach((autocompleteInputField) => {
+    const suggestionsList = autocompleteInputField.nextElementSibling;
+    
+    autocompleteInputField.addEventListener('input', function () {
+        const query = autocompleteInputField.value;
+
+        // Construct the Nominatim API URL
+        const apiUrl = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=5`;
+
+        // Make the API request
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Clear previous suggestions
+                suggestionsList.innerHTML = '';
+
+                // Display matching locations
+                data.forEach(item => {
+                    const locationName = item.display_name;
+                    const listItem = document.createElement('li');
+
+                    // Extract and display the city name from the address
+                    let city = '';
+                    if (item.address) {
+                        if (item.address.city) {
+                            city = item.address.city;
+                        } else if (item.address.town) {
+                            city = item.address.town;
+                        } else if (item.address.village) {
+                            city = item.address.village;
+                        } else if (item.address.hamlet) {
+                            city = item.address.hamlet;
+                        } else if (item.address.suburb) {
+                            city = item.address.suburb;
+                        }
+                    }
+
+                    // Use the full location name if the city is empty
+                    listItem.textContent = city || locationName;
+
+                    // Add click event listener to make suggestions selectable
+                    listItem.addEventListener('click', function () {
+                        autocompleteInputField.value = city || locationName;
+                        suggestionsList.innerHTML = ''; // Clear suggestions
+                    });
+
+                    suggestionsList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data from Nominatim:', error);
+            });
+    });
+});
+
+
+//map
+
+var apiKey = '11af4d539c4a1c02758024a29171351f';
+
+// Initialize the map with a default location and zoom level
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+    ],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([0, 0]),
+        zoom: 2
+    })
+});
+
+// Add the OpenWeatherMap "temp_new" layer
+var tempLayer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+        url: `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`,
+        attributions: '© <a href="https://openweathermap.org">OpenWeatherMap</a> contributors'
+    })
+});
+var overlay = new ol.Overlay({
+    element: document.getElementById('overlay'),
+    positioning: 'bottom-center',
+    offset: [0, -10] // Offset to adjust the marker's position
+});
+
+map.addLayer(tempLayer);
+
+// Add map controls
+map.addControl(new ol.control.ZoomSlider());
+map.addControl(new ol.control.ScaleLine());
+map.addControl(new ol.control.FullScreen());
+
+// Function to reset the map view to the default location
+function resetMapView() {
+    map.getView().animate({
+        center: ol.proj.fromLonLat([0, 0]),
+        zoom: 2,
+        duration: 1000 // Animation duration in milliseconds
+    });
+}
+
+map.addOverlay(overlay);
+
+// Function to set the overlay position on the map
+function setOverlayPosition(latitude, longitude) {
+    overlay.setPosition(ol.proj.fromLonLat([longitude, latitude]));
+}
+
+// Function to perform location search and update the map
+function performLocationSearch() {
+    resetMapView();
+    var locationInput = document.querySelector('.city-input').value;
+
+    // Encode the user input to ensure it's safe for a URL
+    var encodedLocationInput = encodeURIComponent(locationInput);
+
+    // Use Nominatim to geocode the location
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodedLocationInput}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                // Extract the first result (assuming it's the most relevant)
+                var result = data[0];
+
+                // Extract coordinates correctly
+                var latitude = parseFloat(result.lat);
+                var longitude = parseFloat(result.lon);
+
+                // Debugging: Print the result and coordinates to the console
+                console.log('Search Result:', result);
+                console.log('Latitude:', latitude);
+                console.log('Longitude:', longitude);
+
+                setOverlayPosition(latitude, longitude);
+
+                // Smoothly animate to the searched location on the map
+                map.getView().animate({
+                    center: ol.proj.fromLonLat([longitude, latitude]),
+                    zoom: 12,
+                    duration: 1000 // Animation duration in milliseconds
+                });
+            } else {
+                // Handle the case when no results are found
+                alert('Location not found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error searching for location:', error);
+        });
+}
+
+// Event handler for the search button
+document.querySelector('.search-btn').addEventListener('click', performLocationSearch);
+
+// Event handler for pressing Enter in the input field
+document.querySelector('.city-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        performLocationSearch();
+    }
+});
+
+
+//5day
+
+    const get7DayWeather = () => {
+    const cityInput = document.querySelector(".city-input");
+    const searchButton = document.querySelector(".search-btn");
+    const locationButton = document.querySelector(".location-btn");
+    const weatherCardsDiv = document.querySelector(".weather-cards");
+    const API_KEY = "14720e4bb005911f685488726cb4c177"; // API key for OpenWeatherMap API
+
+    const createWeatherCard = (weatherItem) =>  {
+      const timestamp = weatherItem.dt;
+    const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayOfWeek = daysOfWeek[date.getDay()];
+
+    const description = weatherItem.weather[0].description;
+
+    return `<li class="card">
+        <h3>${dayOfWeek}</h3>
+        <img class="weathericon" src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}.png" alt="weather-icon">
+        <h6>${(weatherItem.main.temp - 273.15).toFixed(2)}°C</h6>
+        <p>${description}</p>
+    </li>`;
+}
+
+    const getWeatherDetails = (cityName, latitude, longitude) => {
+    const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+
+    fetch(WEATHER_API_URL)
+        .then(response => response.json())
+        .then(data => {
+            cityInput.value = "";
+
+            // Filter out data for day 1
+            const filteredData = data.list.filter((weatherItem, index) => index > 7); // Skip the first 8 entries (assuming 3-hour intervals)
+
+            // Clear the weather-cards div before adding new forecast data
+            weatherCardsDiv.innerHTML = "";
+
+            const uniqueDays = new Set();
+            filteredData.forEach((weatherItem) => {
+                const forecastDate = weatherItem.dt_txt.split(" ")[0];
+                if (!uniqueDays.has(forecastDate)) {
+                    const html = createWeatherCard(weatherItem);
+                    weatherCardsDiv.insertAdjacentHTML("beforeend", html);
+                    uniqueDays.add(forecastDate);
+                }
+                if (uniqueDays.size >= 5) {
+                    // Stop after displaying forecast for 5 unique days
+                    return;
+                }
+            });
+        })
+        .catch(() => {
+            alert("An error occurred while fetching the weather forecast!");
+        });
+}
+
+
+    const getCityCoordinates = () => {
+        const cityName = cityInput.value.trim();
+        if (cityName === "") return;
+        const API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.length) return alert(`No coordinates found for ${cityName}`);
+                const { lat, lon, name } = data[0];
+                getWeatherDetails(name, lat, lon);
+            })
+            .catch(() => {
+                alert("An error occurred while fetching the coordinates!");
+            });
+    }
+
+    const getUserCoordinates = () => {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const { latitude, longitude } = position.coords;
+                const API_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}`;
+                fetch(API_URL)
+                    .then(response => response.json())
+                    .then(data => {
+                        const { name } = data[0];
+                        getWeatherDetails(name, latitude, longitude);
+                    })
+                    .catch(() => {
+                        alert("An error occurred while fetching the city name!");
+                    });
+            },
+            error => {
+                if (error.code === error.PERMISSION_DENIED) {
+                    alert("Geolocation request denied. Please reset location permission to grant access again.");
+                } else {
+                    alert("Geolocation request error. Please reset location permission.");
+                }
+            }
+        );
+    }
+    
+
+    locationButton.addEventListener("click", getUserCoordinates);
+    searchButton.addEventListener("click", getCityCoordinates);
+    cityInput.addEventListener("keyup", e => e.key === "Enter" && getCityCoordinates());
+}
+
+// Call the function to initialize the functionality
+get7DayWeather();
+
+
+
+
+
+let weather = {
+    apikey: "11af4d539c4a1c02758024a29171351f",
+
+    fetchWeather: function (city) {
+        fetch(
             "https://api.openweathermap.org/data/2.5/weather?q=" +
-              city +
-              "&units=metric&appid=" +
-              this.apikey
-          )
+            city +
+            "&units=metric&appid=" +
+            this.apikey
+        )
             .then((response) => response.json())
             .then((data) => this.displayWeather(data))
             .catch((error) => {
-              console.error("Error fetching weather data:", error);
+                console.error("Error fetching weather data:", error);
             });
-        },
-      
-          fetchAirQuality: function (city) {
-          fetch(
-            `https://api.openweathermap.org/data/2.5/air_pollution?q=${city}&appid=${this.apikey}`
-          )
-            .then((response) => response.json())
-            .then((data) => this.displayAirQuality(data))
-            .catch((error) => {
-              console.error("Error fetching air quality data:", error);
-            });
-        },
-      
-      
-        displayWeather: function (data) {
-          const { main, wind, weather } = data;
-          const { temp, humidity, pressure, feels_like } = main;
-          const { speed, gust } = wind;
-          const { description } = weather[0];
-      
-          // Update HTML elements with weather information
-          document.querySelector(".temp").innerText = temp + "°C";
-          document.querySelector(".description").innerText = description;
-          document.querySelector(".humidity .idity").innerText = humidity + "%";
-          document.querySelector(".pressure .ssure").innerText = pressure + " hPa";
-          document.querySelector(".windspeed .speed").innerText = speed + " km/h";
-          document.querySelector(".gust .speed").innerText = gust + " km/h";
-          document.querySelector(".clouds .speed").innerText = data.clouds.all + "%";
-          document.querySelector(".feels .like").innerText = feels_like + "°C";
-          document.querySelector(".minmax .speed").innerText = data.main.temp_min + "/" + data.main.temp_max + "°C";
-        },
-      
-        search: function () {
-          this.fetchWeather(document.querySelector(".search-bar").value);
-        },
-      };
-      
-      document.querySelector(".search button").addEventListener("click", function () {
-        weather.search();
-      });
-      
-      document.querySelector(".search-bar").addEventListener("keyup", function (event) {
-        if (event.key == "Enter") {
-          weather.search();
-        }
-      });
-      
-      // Fetch weather data for the default city (Denver) when the page loads
-      window.addEventListener("load", function () {
-        weather.fetchWeather("Denver");
-      });
-      
-      
-      
-      
-      
-      let airQuality = {
-        apikey: "11af4d539c4a1c02758024a29171351f", // Replace with your OpenWeatherMap API key
-      
-        fetchAirQuality: function (city) {
-          fetch(
-            `https://api.openweathermap.org/data/2.5/air_pollution?q=${city}&appid=${this.apikey}`
-          )
-            .then((response) => response.json())
-            .then((data) => this.displayAirQuality(data))
-            .catch((error) => {
-              console.error("Error fetching air quality data:", error);
-            });
-        },
-      
-        displayAirQuality: function (data) {
-          const airPollution = data.list[0].components;
-      
-          // Update HTML elements with air pollution parameters
-          document.querySelector(".co").innerText = `CO: ${airPollution.co} µg/m³`;
-          document.querySelector(".no").innerText = `NO: ${airPollution.no} µg/m³`;
-          document.querySelector(".no2").innerText = `NO2: ${airPollution.no2} µg/m³`;
-          document.querySelector(".o3").innerText = `O3: ${airPollution.o3} µg/m³`;
-          document.querySelector(".so2").innerText = `SO2: ${airPollution.so2} µg/m³`;
-          document.querySelector(".pm25").innerText = `PM2.5: ${airPollution.pm2_5} µg/m³`;
-          document.querySelector(".pm10").innerText = `PM10: ${airPollution.pm10} µg/m³`;
-          document.querySelector(".nh3").innerText = `NH3: ${airPollution.nh3} µg/m³`;
-        },
-      
-        search: function () {
-          const city = document.querySelector(".search-bar").value;
-          this.fetchAirQuality(city);
-        },
-      };
-      
-      // Add event listeners for the search button and Enter key
-      document.querySelector(".search button").addEventListener("click", function () {
-        airQuality.search();
-      });
-      
-      document.querySelector(".search-bar").addEventListener("keyup", function (event) {
-        if (event.key == "Enter") {
-          airQuality.search();
-        }
-      });
-      
-      // Fetch air quality data for the default city (Denver) when the page loads
-      window.addEventListener("load", function () {
-        airQuality.fetchAirQuality("Denver");
-      });
-      
-      </script>
-      <script src="autocomplete.js" defer></script>
+    },
+    displayWeather: function (data) {
+        const { main, wind, weather } = data;
+        const { temp, humidity, pressure, feels_like } = main;
+        const { speed, gust } = wind;
+        const { description } = weather[0];
+
+        // Update HTML elements with weather information
+        document.querySelector(".temp").innerText = temp + "°C";
+        document.querySelector(".description").innerText = description;
+        document.querySelector(".humidity .idity").innerText = humidity + "%";
+        document.querySelector(".pressure .ssure").innerText = pressure + " hPa";
+        document.querySelector(".windspeed .speed").innerText = speed + " km/h";
+        document.querySelector(".gust .speed").innerText = gust + " km/h";
+        document.querySelector(".clouds .speed").innerText = data.clouds.all + "%";
+        document.querySelector(".feels .like").innerText = feels_like + "°C";
+        document.querySelector(".minmax .speed").innerText = data.main.temp_min + "/" + data.main.temp_max + "°C";
+        document.querySelector(".precipitation-value").innerText = data.clouds.all + "%";
+
+         // Display recommendations based on temperature
+        this.displayRecommendations(data);
+    },
+
+    displayRecommendations: function (data) {
+    const { main, wind, weather } = data;
+    const { temp, humidity, pressure } = main;
+    const { speed } = wind;
+    const { description } = weather[0];
+    const { temp_min, temp_max } = main;
+    const { all } = data.clouds;
+
+    let temperatureRecommendation = "";
+    let humidityRecommendation = "";
+    let windSpeedRecommendation = "";
+    let precipitationRecommendation = "";
+    let pressureRecommendation = "";
+    let cloudsRecommendation = "";
+    let GustRecommendation = "";
+
+   // Temperature Recommendations
+   if (temp < -10) {
+        temperatureRecommendation = "Extremely cold! Wear heavy winter clothing, including a warm coat, gloves, and a hat.";
+    } else if (temp >= -10 && temp < -5) {
+        temperatureRecommendation = "Very cold! Dress warmly with a heavy coat, gloves, and a scarf.";
+    } else if (temp >= -5 && temp < 0) {
+        temperatureRecommendation = "Cold. A thick jacket, gloves, and a hat are necessary.";
+    } else if (temp >= 0 && temp < 5) {
+        temperatureRecommendation = "Cool. Wear a warm jacket and layers underneath.";
+    } else if (temp >= 5 && temp < 10) {
+        temperatureRecommendation = "Chilly. A light jacket or coat will suffice.";
+    } else if (temp >= 10 && temp < 15) {
+        temperatureRecommendation = "Mild. A light jacket or sweater should keep you comfortable.";
+    } else if (temp >= 15 && temp < 20) {
+        temperatureRecommendation = "Pleasant. A light jacket or long-sleeve shirt is enough.";
+    } else if (temp >= 20 && temp < 25) {
+        temperatureRecommendation = "Warm. Enjoy the comfortable weather with light clothing.";
+    } else if (temp >= 25 && temp < 30) {
+        temperatureRecommendation = "Hot. Wear light, breathable clothing, and stay hydrated.";
+    } else if (temp >= 30) {
+        temperatureRecommendation = "Extremely hot! Dress in lightweight, loose-fitting clothing, and drink plenty of water.";
+    }
+
+    // Humidity Recommendations
+    if (humidity < 20) {
+        humidityRecommendation = "Extremely low humidity. Be cautious about dehydration and dry skin.";
+    } else if (humidity >= 20 && humidity < 30) {
+        humidityRecommendation = "Very low humidity. Drink water and use moisturizer.";
+    } else if (humidity >= 30 && humidity < 40) {
+        humidityRecommendation = "Low humidity. Stay hydrated and apply lip balm.";
+    } else if (humidity >= 40 && humidity < 50) {
+        humidityRecommendation = "Moderate humidity. Enjoy the comfortable conditions.";
+    } else if (humidity >= 50 && humidity < 60) {
+        humidityRecommendation = "Slightly humid. No specific recommendations, standard comfort should be fine.";
+    } else if (humidity >= 60 && humidity < 70) {
+        humidityRecommendation = "Moderate humidity. Enjoy the pleasant weather.";
+    } else if (humidity >= 70 && humidity < 80) {
+        humidityRecommendation = "High humidity. Stay cool and avoid strenuous activities.";
+    } else if (humidity >= 80 && humidity < 90) {
+        humidityRecommendation = "Very high humidity. Be prepared for discomfort and heat-related issues.";
+    } else if (humidity >= 90) {
+        humidityRecommendation = "Extremely high humidity. Take extreme precautions to avoid heat-related illnesses.";
+    } else {
+        humidityRecommendation = "Humidity levels are extreme. Ensure you stay safe and hydrated.";
+    }
+
+    // Wind Speed Recommendations
+    if (speed < 5) {
+        windSpeedRecommendation = "Calm winds. Perfect for outdoor activities.";
+    } else if (speed >= 5 && speed < 10) {
+        windSpeedRecommendation = "Light breeze. Enjoy the gentle winds.";
+    } else if (speed >= 10 && speed < 20) {
+        windSpeedRecommendation = "Moderate breeze. Conditions are suitable for most activities.";
+    } else if (speed >= 20 && speed < 30) {
+        windSpeedRecommendation = "Fresh breeze. Hold onto your hats!";
+    } else if (speed >= 30 && speed < 40) {
+        windSpeedRecommendation = "Strong breeze. Prepare for windy conditions.";
+    } else if (speed >= 40) {
+        windSpeedRecommendation = "High winds. Take precautions and secure loose items.";
+    }
+
+    // Precipitation Recommendations
+    if (description.includes("rain")) {
+        precipitationRecommendation = "Rainy weather. Don't forget your umbrella!";
+    } else if (description.includes("snow")) {
+        precipitationRecommendation = "Snowfall. Bundle up and drive carefully.";
+    } else if (description.includes("storm")) {
+        precipitationRecommendation = "Stormy conditions. Stay indoors and be safe.";
+    } else if (description.includes("showers")) {
+        precipitationRecommendation = "Showers expected. Carrying an umbrella is a good idea.";
+    } else {
+        precipitationRecommendation = "No significant precipitation expected. Enjoy the dry weather!";
+    }
+
+    //pressure recommendations
+    if (pressure < 1000) {
+        pressureRecommendation = "Low atmospheric pressure. Expect unsettled weather.";
+    } else if (pressure >= 1000 && pressure < 1013) {
+        pressureRecommendation = "Standard atmospheric pressure. Typical weather conditions.";
+    } else if (pressure >= 1013) {
+        pressureRecommendation = "High atmospheric pressure. Expect stable and clear weather.";
+    }
+
+    // Clouds Recommendations
+    if (all < 20) {
+        cloudsRecommendation = "Clear skies. Great for stargazing!";
+    } else if (all >= 20 && all < 60) {
+        cloudsRecommendation = "Partly cloudy. Outdoor activities should be pleasant.";
+    } else if (all >= 60 && all < 90) {
+        cloudsRecommendation = "Mostly cloudy. Might be overcast; check the weather for your plans.";
+    } else if (all >= 90) {
+        cloudsRecommendation = "Overcast skies. Consider indoor activities today.";
+    }
+
+    //gust
+    if (wind.gust < 20) {
+        gustRecommendation = "Gust-speed: Light gusts. Enjoy the pleasant breeze.";
+    } else if (wind.gust >= 20 && wind.gust < 40) {
+        gustRecommendation = "Gust-speed: Moderate gusts. Hold onto your hat!";
+    } else if (wind.gust >= 40) {
+        gustRecommendation = "Gust-speed: Strong gusts. Be cautious and secure loose items.";
+    } else {
+        gustRecommendation = "Gust information not available.";
+    }
+
+    
+     // Update the HTML elements with the recommendations
+    document.querySelector(".temperature-recommendation").innerText = temperatureRecommendation;
+    document.querySelector(".humidity-recommendation").innerText = humidityRecommendation;
+    document.querySelector(".wind-speed-recommendation").innerText = windSpeedRecommendation;
+    document.querySelector(".precipitation-recommendation").innerText = precipitationRecommendation;
+    document.querySelector(".pressure-recommendation").innerText = pressureRecommendation;
+    document.querySelector(".clouds-recommendation").innerText = cloudsRecommendation;
+    document.querySelector(".gust-recommendation").innerText = gustRecommendation;
+},
+    
+};
+
+function getCityCoordinates() {
+    const cityInput = document.querySelector(".city-input");
+    const cityName = cityInput.value.trim();
+    if (cityName === "") return;
+
+    weather.fetchWeather(cityName);
+}
+
+const searchButton = document.querySelector(".search-btn");
+searchButton.addEventListener("click", getCityCoordinates);
+
+document.querySelector(".city-input").addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+        getCityCoordinates();
+    }
+});
+
+// Fetch weather data for the default city (Denver) when the page loads
+window.addEventListener("load", function () {
+    weather.fetchWeather("Denver");
+});
+
+
+
+
+    </script>
+    
+  </body>
 </html>
